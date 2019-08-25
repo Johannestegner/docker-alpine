@@ -31,12 +31,12 @@ download:
           BUILDX_ARCH=$(./target.sh ${ARCH})
           echo "Downloading for ${BUILDX_ARCH} (${ARCH})."
           mkdir -p alpine/${BUILDX_ARCH}
-          curl -OsS "https://ftp.acc.umu.se/mirror/alpinelinux.org/v${VERSION_SHORT}/releases/${ARC}/alpine-minirootfs-${VERSION}-${ARC}.tar.gz"
-          curl -OsS "https://ftp.acc.umu.se/mirror/alpinelinux.org/v${VERSION_SHORT}/releases/${ARC}/alpine-minirootfs-${VERSION}-${ARC}.tar.gz.sha256"
-          curl -OsS "https://ftp.acc.umu.se/mirror/alpinelinux.org/v${VERSION_SHORT}/releases/${ARC}/alpine-minirootfs-${VERSION}-${ARC}.tar.gz.asc"
-          gpg --verify alpine-minirootfs-${VERSION}-${ARC}.tar.gz.asc alpine-minirootfs-${VERSION}-${ARC}.tar.gz
-          grep " alpine-minirootfs-${VERSION}-${ARC}.tar.gz\$" alpine-minirootfs-${VERSION}-${ARC}.tar.gz.sha256 | sha256sum -c -
-          mv alpine-minirootfs-${VERSION}-${ARC}.tar.gz alpine/${BUIDX_ARCH}/alpine-minirootfs.tar.gz
+          curl -OsS "https://ftp.acc.umu.se/mirror/alpinelinux.org/v${VERSION_SHORT}/releases/${ARCH}/alpine-minirootfs-${VERSION}-${ARCH}.tar.gz"
+          curl -OsS "https://ftp.acc.umu.se/mirror/alpinelinux.org/v${VERSION_SHORT}/releases/${ARCH}/alpine-minirootfs-${VERSION}-${ARCH}.tar.gz.sha256"
+          curl -OsS "https://ftp.acc.umu.se/mirror/alpinelinux.org/v${VERSION_SHORT}/releases/${ARCH}/alpine-minirootfs-${VERSION}-${ARCH}.tar.gz.asc"
+          gpg --verify alpine-minirootfs-${VERSION}-${ARCH}.tar.gz.asc alpine-minirootfs-${VERSION}-${ARCH}.tar.gz
+          grep " alpine-minirootfs-${VERSION}-${ARCH}.tar.gz\$" alpine-minirootfs-${VERSION}-${ARCH}.tar.gz.sha256 | sha256sum -c -
+          mv alpine-minirootfs-${VERSION}-${ARCH}.tar.gz alpine/${BUIDX_ARCH}/alpine-minirootfs.tar.gz
       done;
   artifacts:
     paths:
