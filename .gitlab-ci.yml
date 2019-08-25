@@ -27,7 +27,7 @@ download:
     - VERSION=$(wget -qO- https://alpinelinux.org/downloads/ | grep -oP "(?<=<strong>)(([0-9]{0,3}(\.?)){3})" | awk 'NR==1{print $1}')
     - VERSION_SHORT=$(echo ${VERSION} | grep -oP '(\d+[.]\d+)')
     - |
-      for ARCH in "${TARGET_PLATFORMS}"; do
+      for ARCH in ${TARGET_PLATFORMS}; do
           BUILDX_ARCH=$(./target.sh ${ARCH})
           echo "Downloading for ${BUILDX_ARCH} (${ARCH})."
           mkdir -p alpine/${BUILDX_ARCH}
