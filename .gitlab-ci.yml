@@ -29,6 +29,7 @@ download:
     - |
       for ARCH in "${TARGET_PLATFORMS}"; do
           BUILDX_ARCH=$(./target.sh ${ARCH})
+          echo "Downloading for ${BUILDX_ARCH} (${ARCH})."
           mkdir -p alpine/${BUILDX_ARCH}
           curl -OsS "https://ftp.acc.umu.se/mirror/alpinelinux.org/v${VERSION_SHORT}/releases/${ARC}/alpine-minirootfs-${VERSION}-${ARC}.tar.gz"
           curl -OsS "https://ftp.acc.umu.se/mirror/alpinelinux.org/v${VERSION_SHORT}/releases/${ARC}/alpine-minirootfs-${VERSION}-${ARC}.tar.gz.sha256"
