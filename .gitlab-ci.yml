@@ -45,7 +45,7 @@ download:
 
 build:
   stage: build
-  image: registry.gitlab.com/jitesoft/dockerfiles/docker/buildx:latest
+  image: jonoh/docker-buildx-qemu
   dependencies:
     - download
   before_script:
@@ -56,6 +56,7 @@ build:
     - VERSION_SHORT=$(echo ${VERSION} | grep -oP '(\d+[.]\d+)')
     - docker buildx create --name buildx-test --platform linux/amd64,linux/arm64,linux/arm/v8,linux/arm/v7 --use
     - docker buildx inspect --bootstrap buildx-test
+    - update-binfmts --enable
     - docker buildx build --load --platform linux/amd64,linux/arm64,linux/arm/v7 -t ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA} --build-arg VERSION_SHORT=${VERSION_SHORT} --build-arg VERSION=${VERSION} .
     - docker buildx build --load --platform linux/amd64,linux/arm64,linux/arm/v7 -t ${CI_REGISTRY_IMAGE}/buildbase:${CI_COMMIT_SHA} -f buildbase.dockerfile .
     - TAGS="${VERSION} ${EXTRA_TAGS}"
