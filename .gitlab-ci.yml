@@ -45,12 +45,13 @@ download:
 
 build:
   stage: build
-  image: docker:latest
+  image: registry.gitlab.com/jitesoft/dockerfiles/docker:latest
   dependencies:
     - download
   services:
     - docker:dind
   before_script:
+    - docker version
     - apk add --no-cache grep
     - echo ${CI_JOB_TOKEN} | docker login -u gitlab-ci-token registry.gitlab.com --password-stdin
     - echo ${DOCKER_HUB_PASSWORD} | docker login -u ${DOCKER_HUB_USER} --password-stdin
