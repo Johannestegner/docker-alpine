@@ -16,7 +16,7 @@ variables:
 
 pre:test:
   stage: test
-  image: registry.gitlab.com/jitesoft/dockerfiles/buildx:latest
+  image: registry.gitlab.com/jitesoft/dockerfiles/docker/buildx:latest
   script:
     - docker version
     - docker help
@@ -57,7 +57,7 @@ download:
 
 build:
   stage: build
-  image: registry.gitlab.com/jitesoft/dockerfiles/buildx:latest
+  image: registry.gitlab.com/jitesoft/dockerfiles/docker/buildx:latest
   dependencies:
     - download
   before_script:
