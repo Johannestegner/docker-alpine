@@ -2,6 +2,7 @@ include:
   - https://gitlab.com/jitesoft/gitlab-ci-lib/raw/master/container_scan.yml
 
 stages:
+  - test
   - download
   - build
   - scan
@@ -12,6 +13,17 @@ variables:
   TARGET_PLATFORMS: "aarch64 x86_64 armv7"
   EXTRA_TAGS: 'latest 3.10'
   DOCKER_BUILDKIT: 1
+
+pre:test:
+  stage: test
+  image: docker:latest
+  script:
+    - docker version
+    - docker help
+    - docker buildx ls
+  tags:
+    - arm64
+    - jitesoft
 
 download:
   image: registry.gitlab.com/jitesoft/dockerfiles/alpine:latest
@@ -45,7 +57,7 @@ download:
 
 build:
   stage: build
-  image: jonoh/docker-buildx-qemu
+  image: docker:latest
   dependencies:
     - download
   before_script:
@@ -71,6 +83,7 @@ build:
       done
   tags:
     - jitesoft
+    - arm64
 
 scan:
   stage: scan
