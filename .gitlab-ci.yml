@@ -2,7 +2,6 @@ include:
   - https://gitlab.com/jitesoft/gitlab-ci-lib/raw/master/container_scan.yml
 
 stages:
-  - test
   - download
   - build
   - scan
@@ -13,17 +12,6 @@ variables:
   TARGET_PLATFORMS: "aarch64 x86_64 armv7"
   EXTRA_TAGS: 'latest 3.10'
   DOCKER_BUILDKIT: 1
-
-pre:test:
-  stage: test
-  image: registry.gitlab.com/jitesoft/dockerfiles/docker/buildx:latest
-  script:
-    - docker version
-    - docker help
-    - docker buildx ls
-  tags:
-    - arm64
-    - jitesoft
 
 download:
   image: registry.gitlab.com/jitesoft/dockerfiles/alpine:latest
@@ -68,7 +56,6 @@ build:
     - VERSION_SHORT=$(echo ${VERSION} | grep -oP '(\d+[.]\d+)')
     - docker buildx create --name buildx-test --platform linux/amd64,linux/arm64,linux/arm/v8,linux/arm/v7 --use
     - docker buildx inspect --bootstrap buildx-test
-    - update-binfmts --enable
     - docker buildx build --load --platform linux/amd64,linux/arm64,linux/arm/v7 -t ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA} --build-arg VERSION_SHORT=${VERSION_SHORT} --build-arg VERSION=${VERSION} .
     - docker buildx build --load --platform linux/amd64,linux/arm64,linux/arm/v7 -t ${CI_REGISTRY_IMAGE}/buildbase:${CI_COMMIT_SHA} -f buildbase.dockerfile .
     - TAGS="${VERSION} ${EXTRA_TAGS}"
