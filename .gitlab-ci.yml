@@ -49,8 +49,7 @@ build:
   dependencies:
     - download
   before_script:
-    - echo ${CI_JOB_TOKEN} | docker login -u gitlab-ci-token registry.gitlab.com --password-stdin
-    - apt-get install -y wget grep
+    - apk add --no-cache wget grep
   script:
     - VERSION=$(wget -qO- https://alpinelinux.org/downloads/ | grep -oP "(?<=<strong>)(([0-9]{0,3}(\.?)){3})" | awk 'NR==1{print $1}')
     - VERSION_SHORT=$(echo ${VERSION} | grep -oP '(\d+[.]\d+)')
